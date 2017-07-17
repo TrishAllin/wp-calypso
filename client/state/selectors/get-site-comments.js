@@ -29,10 +29,9 @@ export const getSiteComments = createSelector(
 			.filter( key => parseInt( key.split( '-', 1 ), 10 ) === siteId )
 			.reduce( ( list, key ) => [ ...list, ...comments[ key ] ], [] );
 
-		if ( status ) {
-			return filterCommentsByStatus( parsedComments, status );
-		}
-		return parsedComments;
+		return status
+			? filterCommentsByStatus( parsedComments, status )
+			: parsedComments;
 	},
 	state => [ state.comments.items ]
 );
