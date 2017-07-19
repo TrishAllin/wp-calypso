@@ -27,6 +27,7 @@ import {
 	topCoupons,
 	UNITS
 } from 'woocommerce/app/store-stats/constants';
+import QuerySiteStats from 'components/data/query-site-stats';
 
 const listType = {
 	products: topProducts,
@@ -69,8 +70,10 @@ class StoreStatsListView extends Component {
 			date: unitSelectedDate,
 			limit: 100,
 		};
+		const statType = listType[ type ].statType;
 		return (
 			<Main className="store-stats__list-view woocommerce" wideLayout={ true }>
+				{ siteId && <QuerySiteStats statType={ statType } siteId={ siteId } query={ listviewQuery } /> }
 				<HeaderCake onClick={ this.goBack }>{ listType[ type ].title }</HeaderCake>
 				<StatsPeriodNavigation
 					date={ selectedDate }
@@ -85,7 +88,7 @@ class StoreStatsListView extends Component {
 								: selectedDate
 						}
 						query={ listviewQuery }
-						statsType={ listType[ type ].statType }
+						statsType={ statType }
 						showQueryDate
 					/>
 				</StatsPeriodNavigation>
@@ -102,13 +105,13 @@ class StoreStatsListView extends Component {
 					siteId={ siteId }
 					emptyMessage={ listType[ type ].empty }
 					query={ listviewQuery }
-					statType={ listType[ type ].statType }
+					statType={ statType }
 				>
 					<List
 						siteId={ siteId }
 						values={ listType[ type ].values }
 						query={ listviewQuery }
-						statType={ listType[ type ].statType }
+						statType={ statType }
 					/>
 				</Module>
 			</Main>
